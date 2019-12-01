@@ -7,10 +7,11 @@ const addAveragePerYear = players => {
   return players.map(player => {
     const { yearsPlayed, threePointersMade } = player;
     const numberOfYearsPlayed =
-      parseInt(yearsPlayed[1]) - parseInt(yearsPlayed) + 1;
+      parseInt(yearsPlayed[1]) - parseInt(yearsPlayed[0]) + 1;
     player['averagePerYear'] = (
       parseFloat(threePointersMade.replace(',', '')) / numberOfYearsPlayed
     ).toFixed(2);
+
     return player;
   });
 };
@@ -20,7 +21,7 @@ const sortByAveragePerYear = players =>
     (player1, player2) => player2.averagePerYear - player1.averagePerYear
   );
 
-const compact_begin_end_years = yearsStr => {
+const compactBeginEndYears = yearsStr => {
   let result = yearsStr.replace(/present/g, new Date().getFullYear());
   result = result.match(/\(\d.*?\d\)/g);
 
@@ -55,7 +56,7 @@ const fetchPlayers = async () => {
         name: $(tds[1])
           .text()
           .trim(),
-        yearsPlayed: compact_begin_end_years(
+        yearsPlayed: compactBeginEndYears(
           $(tds[3])
             .text()
             .trim()
