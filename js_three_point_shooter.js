@@ -73,13 +73,7 @@ const fetchPlayers = async () => {
   return players;
 };
 
-const TOP_NUMBER_OF_PLAYERS = 10;
-
-async function main() {
-  let players = await fetchPlayers();
-  players = addAveragePerYear(players);
-  sortByAveragePerYear(players);
-
+const printTable = players => {
   const t = new Table({
     head: [
       'Name',
@@ -90,7 +84,7 @@ async function main() {
     ]
   });
 
-  players.slice(0, TOP_NUMBER_OF_PLAYERS).forEach(player => {
+  players.forEach(player => {
     const {
       name,
       yearsPlayed,
@@ -109,6 +103,15 @@ async function main() {
   });
 
   console.log(t.toString());
+};
+
+const TOP_NUMBER_OF_PLAYERS = 10;
+
+async function main() {
+  let players = await fetchPlayers();
+  players = addAveragePerYear(players);
+  sortByAveragePerYear(players);
+  printTable(players.slice(0, TOP_NUMBER_OF_PLAYERS));
 }
 
 main();
