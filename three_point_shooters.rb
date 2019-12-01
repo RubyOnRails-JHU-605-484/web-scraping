@@ -66,7 +66,7 @@ def print_table(players)
         player[:name], 
         player[:years_played].join(' - '),
         player[:three_pointers_made],
-        player[:average_per_year],
+        player[:average_per_year].round(2),
         player[:field_goal_percentage]
       ]  
     end
